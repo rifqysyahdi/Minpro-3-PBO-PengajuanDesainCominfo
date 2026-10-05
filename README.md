@@ -14,7 +14,7 @@ Untuk tugas mini project 3 mata kuliah Pemrograman Berorientasi Objek (PBO), say
 
 Project ini dibagi menjadi 5 package.
 
-![Struktur Package](<img width="338" height="270" alt="image" src="https://github.com/user-attachments/assets/67d31bf3-ef74-4483-99ce-893e7b4690d6" />)
+![Struktur Package](/aset/struktur-package.png)
 
 Package **cominfo** hanya berisi class `Main`, yaitu pintu masuk program. Di sini dibuat object `PengajuanController` dan `PengajuanView`, lalu view dijalankan.
 
