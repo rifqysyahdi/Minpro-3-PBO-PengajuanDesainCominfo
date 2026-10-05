@@ -1,35 +1,50 @@
 package model;
 
-public abstract class PengajuanDesain {
-    private final int idPengajuan;
-    private final Pemohon pemohon;
+public abstract class PengajuanDesain implements Trackable {
+    private int idPengajuan;
+    private Pemohon pemohon;
     private String catatanRevisi;
-    private final String deadline;
+    private String deadline;
     private String status;
 
     public PengajuanDesain(int idPengajuan, Pemohon pemohon, String catatanRevisi, String deadline) {
+        if (idPengajuan <= 0) {
+            throw new IllegalArgumentException("ID Pengajuan harus angka positif.");
+        }
+        if (pemohon == null) {
+            throw new IllegalArgumentException("Data pemohon tidak boleh kosong.");
+        }
         this.idPengajuan = idPengajuan;
         this.pemohon = pemohon;
-        this.catatanRevisi = catatanRevisi;
-        this.deadline = deadline;
+        setCatatanRevisi(catatanRevisi);
+        if (deadline == null || deadline.trim().isEmpty()) {
+            throw new IllegalArgumentException("Deadline tidak boleh kosong.");
+        }
+        this.deadline = deadline.trim();
         this.status = "Diterima";
     }
 
+    public abstract String getKategori();
+
+    public abstract void tampilkanDetail();
+
     public void updateInformasi(String catatanRevisi) {
-        this.catatanRevisi = catatanRevisi;
+        setCatatanRevisi(catatanRevisi);
     }
 
     public void updateInformasi(String catatanRevisi, String status) {
-        this.catatanRevisi = catatanRevisi;
-        this.status = status;
+        setCatatanRevisi(catatanRevisi);
+        setStatus(status);
     }
 
-    public void tampilkanDetail() {
-        System.out.println("ID Pengajuan: " + idPengajuan);
-        System.out.println("Pemohon: " + pemohon.getNamaLengkap() + " (" + pemohon.getDepartemenBiro() + ")");
-        System.out.println("Catatan/Info: " + catatanRevisi);
-        System.out.println("Tenggat Waktu: " + deadline);
-        System.out.println("Status Saat Ini: " + status);
+    @Override
+    public void updateStatus(String statusBaru) {
+        setStatus(statusBaru);
+    }
+
+    @Override
+    public String getRincianStatus() {
+        return "[" + getKategori() + "] ID: " + idPengajuan + " | Status: " + status;
     }
 
     public int getIdPengajuan() {
@@ -44,6 +59,13 @@ public abstract class PengajuanDesain {
         return catatanRevisi;
     }
 
+    public void setCatatanRevisi(String catatanRevisi) {
+        if (catatanRevisi == null || catatanRevisi.trim().isEmpty()) {
+            throw new IllegalArgumentException("Catatan tidak boleh kosong.");
+        }
+        this.catatanRevisi = catatanRevisi.trim();
+    }
+
     public String getDeadline() {
         return deadline;
     }
@@ -53,6 +75,9 @@ public abstract class PengajuanDesain {
     }
 
     public void setStatus(String status) {
-        this.status = status;
+        if (status == null || status.trim().isEmpty()) {
+            throw new IllegalArgumentException("Status tidak boleh kosong.");
+        }
+        this.status = status.trim();
     }
 }

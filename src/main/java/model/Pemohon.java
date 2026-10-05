@@ -5,8 +5,8 @@ public class Pemohon {
     private String departemenBiro;
 
     public Pemohon(String namaLengkap, String departemenBiro) {
-        this.namaLengkap = namaLengkap;
-        this.departemenBiro = departemenBiro;
+        setNamaLengkap(namaLengkap);
+        setDepartemenBiro(departemenBiro);
     }
 
     public String getNamaLengkap() {
@@ -14,7 +14,10 @@ public class Pemohon {
     }
 
     public void setNamaLengkap(String namaLengkap) {
-        this.namaLengkap = namaLengkap;
+        if (namaLengkap == null || namaLengkap.trim().isEmpty()) {
+            throw new IllegalArgumentException("Nama pemohon tidak boleh kosong.");
+        }
+        this.namaLengkap = namaLengkap.trim();
     }
 
     public String getDepartemenBiro() {
@@ -22,6 +25,9 @@ public class Pemohon {
     }
 
     public void setDepartemenBiro(String departemenBiro) {
-        this.departemenBiro = departemenBiro;
+        if (departemenBiro == null || departemenBiro.trim().isEmpty()) {
+            throw new IllegalArgumentException("Departemen/Biro tidak boleh kosong.");
+        }
+        this.departemenBiro = departemenBiro.trim();
     }
 }
